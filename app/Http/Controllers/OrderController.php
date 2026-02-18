@@ -13,16 +13,21 @@ use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
+    public function index()
+{
+    return Order::with('items')
+        ->latest()
+        ->get();
+}
     public function store(Request $request)
     {
-        // 🔥 START PERFORMANCE TIMER
         $startTime = microtime(true);
 
-        // ✅ VALIDATION
         $validated = $request->validate([
             'items' => 'required|array|min:1',
             'items.*.product_id' => 'required|exists:products,id',
             'items.*.quantity' => 'required|integer|min:1',
+            'items.*.ingredients' => 'required|array',
             'source' => 'required|string|in:pos,ecommerce'
         ]);
 
@@ -30,13 +35,11 @@ class OrderController extends Controller
 
             $total = 0;
 
-            // ✅ CALCULATE TOTAL FIRST
             foreach ($validated['items'] as $item) {
                 $product = Product::findOrFail($item['product_id']);
                 $total += $product->price * $item['quantity'];
             }
 
-            // ✅ CREATE ORDER
             $order = Order::create([
                 'order_number' => 'ORD-' . strtoupper(uniqid()),
                 'total_amount' => $total,
@@ -44,7 +47,6 @@ class OrderController extends Controller
                 'source' => $validated['source'],
             ]);
 
-            // ✅ CREATE ORDER ITEMS + DEDUCT INVENTORY
             foreach ($validated['items'] as $item) {
 
                 $product = Product::with('ingredients')
@@ -62,22 +64,35 @@ class OrderController extends Controller
                     $requiredQuantity =
                         $ingredient->pivot->quantity_required * $item['quantity'];
 
-                    // ❌ STOCK CHECK
-                    if ($ingredient->stock_quantity < $requiredQuantity) {
+                    $clientVersion = collect($item['ingredients'])
+                        ->firstWhere('id', $ingredient->id)['version'] ?? null;
+
+                    // 🔐 Optimistic Lock Check
+                    if ($clientVersion != $ingredient->version) {
                         throw new HttpResponseException(response()->json([
-                            'message' => 'Insufficient stock',
-                            'ingredient' => $ingredient->name,
+                            'status' => 'reject_concurrency',
+                            'message' => 'Inventory version mismatch',
                             'ingredient_id' => $ingredient->id,
-                            'required_quantity' => $requiredQuantity,
-                            'available_quantity' => $ingredient->stock_quantity,
                         ], 409));
                     }
 
-                    // 🔻 DEDUCT STOCK
+                    // 🛑 Inventory Sufficiency Check
+                    if ($ingredient->stock_quantity < $requiredQuantity) {
+                        throw new HttpResponseException(response()->json([
+                            'status' => 'reject_inventory',
+                            'message' => 'Insufficient stock',
+                            'ingredient_id' => $ingredient->id,
+                            'required' => $requiredQuantity,
+                            'available' => $ingredient->stock_quantity,
+                        ], 409));
+                    }
+
+                    // 🔻 Deduct + Increment Version
                     $ingredient->decrement('stock_quantity', $requiredQuantity);
+                    $ingredient->increment('version');
+
                     $ingredient->refresh();
 
-                    // 🔔 LOW STOCK EVENT
                     if (
                         isset($ingredient->low_stock_threshold) &&
                         $ingredient->stock_quantity <= $ingredient->low_stock_threshold
@@ -87,18 +102,16 @@ class OrderController extends Controller
                 }
             }
 
-            // 🔔 ORDER CREATED EVENT
             event(new OrderCreated($order->load('items')));
 
-            // 🔥 STOP PERFORMANCE TIMER
-            $endTime = microtime(true);
-            $executionTime = $endTime - $startTime;
+            $executionTime = round(microtime(true) - $startTime, 5);
 
             return response()->json([
-                'message' => 'Order processed successfully',
-                'execution_time_seconds' => round($executionTime, 5),
+                'status' => 'commit',
+                'execution_time_seconds' => $executionTime,
                 'order' => $order->load('items')
             ]);
         });
     }
+    
 }

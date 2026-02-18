@@ -27,3 +27,4 @@ Route::apiResource('ingredients', IngredientController::class);
 Route::apiResource('products', ProductController::class);
 //Route::apiResource('orders', OrderController::class);
 Route::post('/orders', [OrderController::class, 'store']);
+Route::get('/orders', [OrderController::class, 'index']);
