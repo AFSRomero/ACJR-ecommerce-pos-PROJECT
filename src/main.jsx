@@ -1,16 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
+import App from './App'
+import { CartProvider } from './context/CartContext'
 import './index.css'
 
-// This looks for the <div id="root"> in your index.html
-const element = document.getElementById('root');
-
-if (element) {
-  const root = ReactDOM.createRoot(element);
-  root.render(
-    <React.StrictMode>
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <CartProvider>
       <App />
-    </React.StrictMode>
-  );
-}
+    </CartProvider>
+  </React.StrictMode>
+)

@@ -1,121 +1,21 @@
 :root {
-  --amazon-navy: #131921;
-  --amazon-light-navy: #232f3e;
-  --amazon-orange: #febd69;
-  --amazon-yellow: #f0c14b;
-  --bg-gray: #eaeded;
-}
-
-/* Fix the Body Margin so the Header sticks to the edges */
-body {
-  margin: 0;
-  padding: 0;
-  background-color: #eaeded; /* The specific Amazon background light gray */
-}
-
-/* Make sure the main content doesn't get hidden under the sticky header */
-main {
-  padding-top: 0 !important; /* The Amazon header isn't usually fixed */
-}
-
-/* Amazon's custom scrollbar style */
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-thumb {
-  background: #c1c1c1;
-  border-radius: 4px;
+  --leaf-primary: #2d6a4f;      /* Deep Forest Green */
+  --leaf-secondary: #52b788;    /* Fresh Mint */
+  --leaf-bg: #f0f7f4;           /* Soft Organic Cream */
+  --leaf-accent: #ffb703;       /* Earthy Sun Gold */
+  --leaf-text: #1b4332;         /* Dark Wood */
 }
 
 body {
   margin: 0;
-  background-color: var(--bg-gray);
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  color: #0f1111;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--leaf-bg);
+  color: var(--leaf-text);
 }
 
-/* THE AMAZON HEADER */
-header {
-  background-color: var(--amazon-navy);
-  padding: 10px 20px;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  color: white;
-}
-
-header input {
-  flex-grow: 1;
-  padding: 10px;
-  border-radius: 4px 0 0 4px;
-  border: none;
-  outline: none;
-}
-
-.search-button {
-  background-color: var(--amazon-orange);
-  border: none;
-  padding: 10px 15px;
-  border-radius: 0 4px 4px 0;
-  cursor: pointer;
-}
-
-/* THE SIDEBAR (Amazon's "All" Menu Style) */
-nav {
-  background-color: var(--amazon-light-navy);
-  color: white;
-  padding: 10px 20px;
-  display: flex;
-  gap: 15px;
-}
-
-nav a {
-  color: white;
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: 500;
-}
-
-/* PRODUCT GRID - Amazon uses white boxes on a grey background */
-.grid {
+.food-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 20px;
+  gap: 25px;
   padding: 20px;
-  max-width: 1500px;
-  margin: 0 auto;
-}
-
-.product-card {
-  background: white;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  border: 1px solid transparent;
-}
-
-.product-card:hover {
-  border: 1px solid #ddd;
-}
-
-.product-card img {
-  width: 100%;
-  height: 200px;
-  object-fit: contain; /* Amazon preserves aspect ratio with white space */
-  margin-bottom: 10px;
-}
-
-/* THE "ADD TO CART" BUTTON (Amazon Yellow) */
-.amazon-btn {
-  background: linear-gradient(to bottom, #f7dfa1, #f0c14b);
-  border: 1px solid #a88734;
-  border-radius: 3px;
-  padding: 8px;
-  font-size: 13px;
-  cursor: pointer;
-  margin-top: auto;
-}
-
-.amazon-btn:hover {
-  background: linear-gradient(to bottom, #f5d78e, #eeb933);
 }

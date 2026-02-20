@@ -1,0 +1,33 @@
+.filter-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 20px 0;
+  gap: 10px;
+}
+
+/* Base "River Stone" Button Style */
+.stone-btn {
+  padding: 12px 28px;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  background-color: #d8f3dc; /* Soft Mint */
+  color: #2d6a4f; /* Deep Green */
+}
+
+/* Hover effect for buttons that aren't active */
+.stone-btn:hover:not(.active) {
+  background-color: #b7e4c7;
+  transform: translateY(-2px);
+}
+
+/* Active "Deep Forest" Style */
+.stone-btn.active {
+  background-color: #2d6a4f;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(45, 106, 79, 0.2);
+}

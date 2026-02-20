@@ -1,19 +1,22 @@
-import Sidebar from '../components/Sidebar';
+import React from 'react';
+import { Outlet } from 'react-router-dom';
 import Header from '../components/Header';
-import Footer from '../components/Footer';
+import Sidebar from '../components/Sidebar';
+import Footer from '../components/Footer'; // Import it here
 
-const ClientTierLayout = ({ children }) => {
+const ClientTierLayout = () => {
   return (
-    <div className="flex min-h-screen flex-col">
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <Header />
-      {/* If you want the Amazon look, you can comment out the Sidebar */}
-      <div className="flex flex-1">
-        {/* <Sidebar /> */} 
-        <main className="flex-1">
-          {children}
+      
+      <div style={{ display: 'flex', flex: 1 }}>
+        <main style={{ flex: 1, padding: '20px' }}>
+          <Outlet />
         </main>
+        <Sidebar />
       </div>
-      <Footer />
+
+      <Footer /> {/* Add it here at the bottom */}
     </div>
   );
 };

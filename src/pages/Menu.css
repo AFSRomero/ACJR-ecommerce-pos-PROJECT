@@ -1,0 +1,76 @@
+.hero-section {
+  width: 100%;
+  background-color: #f0f7f4; /* That soft leafy background */
+  padding: 60px 20px;
+  display: flex;
+  justify-content: center; /* Centers horizontally */
+  align-items: center;     /* Centers vertically */
+}
+
+.hero-content {
+  display: flex;
+  flex-direction: column;  /* FORCES stacking (Title over Subtitle over Search) */
+  align-items: center;     /* Centers text and search bar */
+  max-width: 600px;
+  width: 100%;
+  gap: 15px;               /* Professional spacing between elements */
+}
+
+.hero-title {
+  font-size: 3rem;
+  color: #1b4332;
+  font-weight: 800;
+  margin: 0;
+}
+
+.hero-subtitle {
+  font-size: 1.1rem;
+  color: #2d6a4f;
+  margin: 0;
+}
+
+.search-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  align-items: center;
+}
+
+.search-input {
+  width: 100%;
+  padding: 15px 80px 15px 25px; /* Increased right padding to fit two icons */
+  border-radius: 50px;
+  border: 2px solid #d8f3dc;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.clear-search-btn {
+  position: absolute;
+  right: 50px; /* Positioned to the left of the magnifying glass */
+  background: none;
+  border: none;
+  color: #2d6a4f;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: bold;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s ease;
+}
+
+.clear-search-btn:hover {
+  color: #ff4757; /* Subtle red hint for "delete/clear" */
+}
+
+.search-icon {
+  position: absolute;
+  right: 20px;
+  font-size: 1.2rem;
+  pointer-events: none;
+  opacity: 0.6;
+}
