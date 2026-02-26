@@ -9,7 +9,11 @@ class ProductController extends Controller
 {
     public function index()
 {
-    return response()->json(Product::all());
+    return response()->json(
+    Product::with(['ingredients' => function ($query) {
+        $query->select('ingredients.id', 'name', 'stock_quantity', 'version');
+    }])->get()
+);
 }
 
 public function store(Request $request)

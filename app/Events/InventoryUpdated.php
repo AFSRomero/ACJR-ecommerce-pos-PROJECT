@@ -2,38 +2,37 @@
 
 namespace App\Events;
 
-use App\Models\Order;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\InteractsWithSockets;
 
-class OrderCreated implements ShouldBroadcast
+class InventoryUpdated implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $order;
+    public $ingredient;
 
-    public function __construct(Order $order)
+    public function __construct($ingredient)
     {
-        $this->order = $order;
+        $this->ingredient = $ingredient;
     }
 
     public function broadcastOn()
     {
-        return new Channel('orders');
+        return new Channel('inventory');
     }
 
     public function broadcastAs()
     {
-        return 'orders.created';
+        return 'inventory.updated';
     }
 
     public function broadcastWith()
     {
         return [
-            'order' => $this->order
+            'ingredient' => $this->ingredient
         ];
     }
 }

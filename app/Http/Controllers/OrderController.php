@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\InventoryUpdated;
+use App\Events\LowStockDetected;
+use App\Events\OrderCreated;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
-use App\Events\OrderCreated;
-use App\Events\LowStockDetected;
-use Illuminate\Http\Request;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
-    public function index()
+    public function index() 
 {
     return Order::with('items')
         ->latest()
@@ -92,7 +93,8 @@ class OrderController extends Controller
                     $ingredient->increment('version');
 
                     $ingredient->refresh();
-
+                    
+                    event(new InventoryUpdated($ingredient));
                     if (
                         isset($ingredient->low_stock_threshold) &&
                         $ingredient->stock_quantity <= $ingredient->low_stock_threshold
