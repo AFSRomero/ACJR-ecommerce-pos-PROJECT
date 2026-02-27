@@ -40,7 +40,7 @@ const FoodCard = ({ food }) => {
         <p className="food-desc">{food.desc}</p>
         
         <div className="card-footer">
-          <span className="food-price">${food.price.toFixed(2)}</span>
+          <span className="food-price">${parseFloat(food.price).toFixed(2)}</span>
           <button onClick={handleAdd} className="add-btn">Add +</button>
         </div>
       </div>

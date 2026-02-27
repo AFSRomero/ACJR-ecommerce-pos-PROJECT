@@ -1,18 +1,32 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import api from '../services/api';
 
 const OrderHistory = () => {
-  const pastOrders = [
-    { id: '#1001', date: '2026-02-18', total: 28.49, status: 'Delivered' },
-    { id: '#1002', date: '2026-02-19', total: 15.50, status: 'Processing' }
-  ];
+  const [orders, setOrders] = useState([]);
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      const res = await api.get('/orders');
+      setOrders(res.data);
+    };
+
+    fetchOrders();
+  }, []);
 
   return (
     <div className="history-page">
       <h1>My Orders</h1>
-      {pastOrders.map(order => (
-        <div key={order.id} style={{ border: '1px solid #eee', padding: '15px', borderRadius: '10px', margin: '10px 0' }}>
-          <strong>Order {order.id}</strong> - {order.date}
-          <p>Total: ${order.total.toFixed(2)} | Status: <span style={{ color: '#ff4757' }}>{order.status}</span></p>
+
+      {orders.map(order => (
+        <div key={order.id} style={{
+          border: '1px solid #eee',
+          padding: '15px',
+          borderRadius: '10px',
+          margin: '10px 0'
+        }}>
+          <strong>{order.order_number}</strong>
+          <p>Total: ₱{order.total_amount}</p>
+          <p>Status: {order.status}</p>
         </div>
       ))}
     </div>

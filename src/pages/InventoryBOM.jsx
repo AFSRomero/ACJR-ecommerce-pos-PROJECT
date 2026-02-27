@@ -1,27 +1,51 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import echo from '../services/echo';
+import api from '../services/api';
 
 const InventoryBOM = () => {
-  const inventory = [
-    { id: 1, item: "Beef Patties", qty: 45, unit: "pcs" },
-    { id: 2, item: "Pizza Dough", qty: 20, unit: "kg" },
-    { id: 3, item: "Buns", qty: 60, unit: "pcs" }
-  ];
+  const [inventory, setInventory] = useState([]);
+
+  useEffect(() => {
+    const fetchInventory = async () => {
+      const res = await api.get('/ingredients');
+      setInventory(res.data);
+    };
+
+    fetchInventory();
+  }, []);
+
+  useEffect(() => {
+    echo.channel("inventory")
+      .listen(".inventory.updated", (e) => {
+        setInventory(prev =>
+          prev.map(item =>
+            item.id === e.ingredient.id ? e.ingredient : item
+          )
+        );
+      });
+
+    return () => {
+      echo.leave("inventory");
+    };
+  }, []);
 
   return (
     <div className="admin-page">
-      <h2>Kitchen Inventory (BOM)</h2>
-      <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '20px' }}>
+      <h2>Kitchen Inventory</h2>
+
+      <table style={{ width: '100%', marginTop: '20px' }}>
         <thead>
-          <tr style={{ background: '#eee' }}>
-            <th style={{ padding: '10px', textAlign: 'left' }}>Material</th>
-            <th style={{ padding: '10px', textAlign: 'left' }}>Current Stock</th>
+          <tr>
+            <th>Ingredient</th>
+            <th>Stock</th>
           </tr>
         </thead>
+
         <tbody>
           {inventory.map(i => (
-            <tr key={i.id} style={{ borderBottom: '1px solid #ddd' }}>
-              <td style={{ padding: '10px' }}>{i.item}</td>
-              <td style={{ padding: '10px' }}>{i.qty} {i.unit}</td>
+            <tr key={i.id}>
+              <td>{i.name}</td>
+              <td>{i.stock_quantity} {i.unit}</td>
             </tr>
           ))}
         </tbody>

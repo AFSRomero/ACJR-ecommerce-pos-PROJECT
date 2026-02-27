@@ -10,7 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "laravel-echo": "^2.3.0",
     "lucide-react": "^0.574.0",
+    "pusher-js": "^8.4.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.13.0"
