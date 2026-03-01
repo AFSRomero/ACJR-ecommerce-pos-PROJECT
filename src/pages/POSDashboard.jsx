@@ -1,8 +1,18 @@
 import { useEffect, useState } from "react";
 import echo from "../services/echo";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export default function POSDashboard() {
   const [orders, setOrders] = useState([]);
+  const { logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+  await logout();
+  navigate("/login");
+  };
+
 
   useEffect(() => {
     console.log("POS mounted");
