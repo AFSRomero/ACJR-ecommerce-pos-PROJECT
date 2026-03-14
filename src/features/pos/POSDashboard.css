@@ -1,0 +1,295 @@
+.pos-container {
+  display: flex;
+  gap: 20px;
+  height: calc(100vh - 120px);
+}
+
+.pos-products { flex: 1; display: flex; flex-direction: column; }
+
+.pos-search-bar input {
+  width: 100%;
+  padding: 15px;
+  border-radius: 12px;
+  border: 2px solid #e2e8f0;
+  margin-bottom: 20px;
+  font-size: 1rem;
+}
+
+.pos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 15px;
+  overflow-y: auto;
+}
+
+.pos-card {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  cursor: pointer;
+  transition: 0.2s;
+  position: relative;
+}
+
+.pos-card:hover { border-color: #2d6a4f; transform: translateY(-3px); }
+
+.pos-card-price {
+  background: #f0f7f4;
+  color: #2d6a4f;
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  margin-bottom: 10px;
+  display: inline-block;
+}
+
+.pos-sidebar {
+  width: 380px;
+  background: white;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  padding: 20px;
+}
+
+.pos-cart-list { flex: 1; overflow-y: auto; margin: 20px 0; }
+
+.pos-cart-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.item-qty { font-weight: 800; color: #2d6a4f; margin-right: 10px; }
+
+.pos-footer { border-top: 2px solid #f1f5f9; padding-top: 20px; }
+
+.pos-total {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #1b4332;
+  margin-bottom: 20px;
+}
+
+.pos-checkout-btn {
+  width: 100%;
+  background: #2d6a4f;
+  color: white;
+  border: none;
+  padding: 18px;
+  border-radius: 12px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.pos-checkout-btn:disabled { background: #cbd5e1; }
+
+@media print {
+  /* Hide everything except the receipt area */
+  .no-print, .no-print-area, .main-nav, .sidebar-nav {
+    display: none !important;
+  }
+
+  .pos-container {
+    display: block !important;
+    padding: 0;
+  }
+
+  .receipt-print-area {
+    width: 100% !important;
+    color: black !important;
+    background: white !important;
+    box-shadow: none !important;
+  }
+}
+.pos-card-image {
+  width: 100%;
+  height: 100px;
+  background: #f9f9f9;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pos-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* This prevents the image from looking stretched */
+}
+
+.image-placeholder {
+  color: #ccc;
+  font-size: 12px;
+} 
+
+/* src/features/pos/POSDashboard.css */
+
+/* --- Standard UI Styles --- */
+.pos-container {
+  display: flex;
+  height: calc(100vh - 70px);
+  gap: 20px;
+  padding: 20px;
+  background-color: #f5f5f5;
+}
+
+/* ... your existing styles for pos-products and pos-sidebar ... */
+
+/* --- PRINT STYLES --- */
+@media print {
+  /* 1. Hide everything we don't want on a receipt */
+  .no-print, 
+  .no-print-area, 
+  .main-nav, 
+  .pos-products, 
+  .pos-search-bar,
+  .item-actions button {
+    display: none !important;
+  }
+
+  /* 2. Reset the container for paper */
+  body, .app-shell, .content-area, .pos-container {
+    background: white !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: block !important;
+    height: auto !important;
+  }
+
+  /* 3. Style the Sidebar as a Thermal Receipt */
+  .receipt-print-area {
+    width: 300px !important; /* Standard thermal paper width approx. 80mm */
+    margin: 0 auto !important;
+    color: black !important;
+    background: white !important;
+    border: none !important;
+    padding: 10px !important;
+    font-family: 'Courier New', Courier, monospace; /* Classic receipt font */
+  }
+
+  .sidebar-title {
+    text-align: center;
+    border-bottom: 2px dashed #000;
+    padding-bottom: 10px;
+    text-transform: uppercase;
+  }
+
+  .pos-cart-item {
+    border-bottom: 1px dashed #ccc;
+    padding: 5px 0;
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .pos-total {
+    border-top: 2px solid #000;
+    margin-top: 20px;
+    padding-top: 10px;
+    font-weight: bold;
+    font-size: 18px;
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.pos-category-nav {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  overflow-x: auto;
+  padding-bottom: 5px;
+}
+
+.category-btn {
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 1px solid #e2e8f0;
+  background: white;
+  cursor: pointer;
+  white-space: nowrap;
+  font-weight: 600;
+  color: #64748b;
+  transition: 0.2s;
+}
+
+.category-btn.active {
+  background: #2d6a4f; /* Match your existing theme */
+  color: white;
+  border-color: #2d6a4f;
+}
+
+.no-results-msg {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 40px;
+  color: #94a3b8;
+}
+
+.remove-btn {
+  background: none;
+  border: none;
+  color: #ef4444;
+  cursor: pointer;
+  margin-left: 10px;
+  font-weight: bold;
+}
+
+.pos-search-container {
+  background: white;
+  padding: 15px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.search-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 15px;
+  color: #94a3b8;
+}
+
+.pos-search-input {
+  width: 100%;
+  padding: 12px 12px 12px 45px !important; /* Extra padding on left for icon */
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.pos-search-input:focus {
+  outline: none;
+  border-color: #2d6a4f; /* Matches Foodino Green */
+  box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.1);
+}
+
+.clear-search {
+  position: absolute;
+  right: 15px;
+  background: none;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.clear-search:hover {
+  color: #ef4444;
+}

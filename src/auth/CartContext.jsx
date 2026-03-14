@@ -11,6 +11,7 @@ export const CartProvider = ({ children }) => {
       if (exists) {
         return prev.map(item => item.id === product.id ? { ...item, qty: item.qty + 1 } : item);
       }
+      // Spread product to keep ingredients array/versioning for optimistic locking
       return [...prev, { ...product, qty: 1 }];
     });
   };
@@ -18,19 +19,21 @@ export const CartProvider = ({ children }) => {
   const removeFromCart = (id) => {
     setCart(prev => prev.filter(item => item.id !== id));
   };
+
   const clearCart = () => {
-  setCart([]);
+    setCart([]);
   };
+
   const cartTotal = cart.reduce((total, item) => total + (item.price * item.qty), 0);
 
   return (
     <CartContext.Provider value={{
-  cart,
-  addToCart,
-  removeFromCart,
-  cartTotal,
-  clearCart
-}}>
+      cart,
+      addToCart,
+      removeFromCart,
+      cartTotal,
+      clearCart
+    }}>
       {children}
     </CartContext.Provider>
   );

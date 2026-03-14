@@ -1,0 +1,136 @@
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f0f7f4; /* Mint Green background */
+  font-family: 'Inter', sans-serif;
+}
+
+.login-card {
+  background: white;
+  padding: 40px;
+  border-radius: 24px;
+  box-shadow: 0 10px 30px rgba(26, 60, 52, 0.08);
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+}
+
+.login-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 20px;
+}
+
+.logo-icon {
+  font-size: 2.5rem;
+}
+
+.login-logo h2 {
+  color: #1a3c34;
+  margin: 0;
+  font-weight: 800;
+}
+
+.login-card h1 {
+  font-size: 1.8rem;
+  color: #1a3c34;
+  margin-bottom: 8px;
+}
+
+.login-subtitle {
+  color: #666;
+  margin-bottom: 30px;
+  font-size: 0.95rem;
+}
+
+.form-group {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #1a3c34;
+  font-size: 0.9rem;
+}
+
+.form-group input {
+  width: 100%; 
+  box-sizing: border-box; /* Prevents padding from pushing the box wider */
+  padding: 14px 18px;
+  border: 1px solid #e0e6e3;
+  border-radius: 14px;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  background-color: #ffffff;
+}
+
+.form-group input:focus {
+  border-color: #1a3c34;
+}
+
+.login-btn {
+  width: 100%;
+  background-color: #1a3c34; /* Brand Dark Green */
+  color: white;
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background 0.2s;
+}
+
+.login-btn:hover {
+  background-color: #245247;
+}
+
+.login-error-msg {
+  background-color: #fff1f0;
+  color: #ff4d4f;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 0.85rem;
+  border: 1px solid #ffccc7;
+}
+
+.register-link {
+  margin-top: 25px;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.register-link a {
+  color: #1a3c34;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.login-footer {
+  text-align: center;
+  margin-top: 25px; /* Adds breathing room below the Register button */
+  font-size: 0.9rem;
+  color: #667873; /* Muted green-grey for the question */
+}
+
+.login-footer a {
+  color: #1a3c34; /* Signature Dark Green for the link */
+  font-weight: 700;
+  text-decoration: none;
+  transition: color 0.2s;
+  margin-left: 4px;
+}
+
+.login-footer a:hover {
+  color: #245247;
+  text-decoration: underline;
+}

@@ -1,0 +1,186 @@
+.ing-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+/* Header & Search Alignment */
+.ing-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px; /* Reduced space between title and form */
+}
+
+.ing-header h2 {
+  font-size: 1.75rem;
+  color: #1a3c34; /* Deeper Foodino Green */
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.header-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.search-pill {
+  display: flex;
+  align-items: center;
+  background: #f1f5f9;
+  padding: 8px 16px;
+  border-radius: 99px;
+  gap: 10px;
+  border: 1px solid transparent;
+}
+
+.search-pill:focus-within {
+  border-color: #2d6a4f;
+  background: white;
+}
+
+.search-pill input {
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 0.9rem;
+}
+
+/* Form Row - Proportional Grid */
+.ing-add-form {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr auto; 
+  gap: 20px; /* Increased gap to ensure inputs don't touch */
+  background: #f8fafc;
+  padding: 24px;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  align-items: flex-end; 
+  margin-bottom: 32px;
+}
+
+.input-group { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 8px; /* Space between label and input box */
+}
+
+/* Ensure each input has its own distinct border */
+.input-group input { 
+  width: 100%;
+  padding: 12px 16px; 
+  border-radius: 10px; 
+  border: 1px solid #cbd5e1; /* Clear, individual border */
+  font-size: 0.95rem; 
+  background: white;
+  box-sizing: border-box; /* Prevents padding from breaking the layout */
+  transition: all 0.2s ease;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: #1b4332;
+  box-shadow: 0 0 0 3px rgba(27, 67, 50, 0.1);
+}
+
+/* Grid & Cards */
+.ing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.ing-card {
+  background: white;
+  padding: 20px;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  position: relative;
+}
+
+.card-top { display: flex; justify-content: space-between; align-items: center; }
+.v-badge { font-size: 0.65rem; color: #94a3b8; font-weight: 600; }
+
+.qty-val { font-size: 2rem; font-weight: 800; color: #1b4332; display: block; margin-top: 10px; }
+.qty-unit { font-size: 0.8rem; color: #64748b; }
+
+.low-stock { border-left: 5px solid #ef4444; background: #fffafb; }
+
+/* Buttons */
+.add-btn {
+  background: #1b4332;
+  color: white;
+  padding: 0 24px;
+  border-radius: 10px;
+  font-weight: 700;
+  border: none;
+  height: 48px; /* Fixed height to match the input + padding */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.toggle-btn {
+  background: white;
+  border: 1px solid #e2e8f0;
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #475569;
+}
+
+/* Restrict header search width for better balance */
+.header-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.search-pill {
+  width: 280px; /* Prevents it from being too wide or too small */
+  transition: all 0.2s ease;
+}
+
+/* Hover effects for the new Add button */
+.add-btn {
+  transition: background 0.2s ease, transform 0.1s active;
+}
+
+.add-btn:hover {
+  background: #2d6a4f; /* Slightly lighter green on hover */
+}
+
+.add-btn:active {
+  transform: scale(0.98);
+}
+
+/* Fix for Card Button Alignment */
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid #f1f5f9;
+}
+
+.btn-text {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: #475569;
+}
+
+.btn-text.danger:hover {
+  background: #fee2e2;
+  color: #ef4444;
+  border-color: #fecaca;
+}

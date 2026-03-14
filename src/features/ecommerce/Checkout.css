@@ -1,0 +1,61 @@
+.checkout-container {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 0 20px;
+  font-family: 'Inter', sans-serif;
+}
+
+.checkout-grid {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 40px;
+}
+
+.checkout-form {
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  border: 1px solid #f0f7f4;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #1a3c34;
+}
+
+.form-group input, .form-group textarea {
+  padding: 12px;
+  border: 1px solid #e0e6e3;
+  border-radius: 10px;
+  font-size: 1rem;
+}
+
+.place-order-btn {
+  width: 100%;
+  background: #1a3c34; /* Brand Green */
+  color: white;
+  padding: 18px;
+  border-radius: 12px;
+  border: none;
+  font-weight: 700;
+  font-size: 1.1rem;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.order-summary-card {
+  background: #fcfdfc;
+  padding: 25px;
+  border-radius: 20px;
+  border: 1px solid #f0f7f4;
+  height: fit-content;
+  position: sticky;
+  top: 100px;
+}

@@ -1,66 +1,46 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
-import ClientTierLayout from './layouts/ClientTierLayout';
-import POSTierLayout from './layouts/POSTierLayout';
-
-import Home from './pages/Home';
-import Checkout from './pages/Checkout';
-import OrderHistory from './pages/OrderHistory';
-import POSDashboard from './pages/POSDashboard';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import Inventory from './pages/Inventory';
-
-import ProtectedRoute from './components/ProtectedRoute';
+import { Routes, Route } from "react-router-dom";
+import AppLayout from "./layouts/AppLayout";
+import Login from "./auth/Login";
+import Register from "./auth/Register";
+import Home from "./features/ecommerce/Home";
+import Checkout from "./features/ecommerce/Checkout";
+import POSDashboard from "./features/pos/POSDashboard";
+import InventoryView from "./features/inventory/InventoryView";
+import IngredientManage from "./features/inventory/IngredientManage";
+import ProductManage from "./features/products/ProductManage";
+import OrderHistory from "./features/orders/OrderHistory";
+import AdminDashboard from "./features/admin/AdminDashboard";
 
 function App() {
   return (
-    <Router>
-      <Routes>
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      
+      <Route element={<AppLayout />}>
+        <Route path="/" element={<Home />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/pos" element={<POSDashboard />} />
+        <Route path="/inventory" element={<InventoryView />} />
+        <Route path="/dashboard" element={<AdminDashboard />} /> 
+        <Route path="/admin/ingredients" element={<IngredientManage />} />
+        <Route path="/admin/products" element={<ProductManage />} />
+        <Route path="/admin/orders" element={<OrderHistory />} />
+      </Route>
 
-        {/* ================= AUTH ================= */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-
-        {/* ================= CUSTOMER ================= */}
-        <Route
-          path="/"
-          element={
-            <ProtectedRoute allowedRole="customer">
-              <ClientTierLayout />
-            </ProtectedRoute>
-          }
-        >
-          <Route index element={<Home />} />
-          <Route path="checkout" element={<Checkout />} />
-          <Route path="history" element={<OrderHistory />} />
-        </Route>
-
-        {/* ================= ADMIN ================= */}
-        <Route
-          path="/inventory"
-          element={
-            <ProtectedRoute allowedRole="admin">
-              <Inventory />
-            </ProtectedRoute>
-          }
-        />
-
-        {/* ================= CASHIER ================= */}
-        <Route
-          path="/pos"
-          element={
-            <ProtectedRoute allowedRole="cashier">
-              <POSTierLayout />
-            </ProtectedRoute>
-          }
-        >
-          <Route index element={<POSDashboard />} />
-        </Route>
-
-      </Routes>
-    </Router>
+      <Route path="*" element={
+        <div style={{ padding: "100px", textAlign: "center", fontFamily: "sans-serif" }}>
+          <h1 style={{ fontSize: "4rem", color: "#1a3c34" }}>404</h1>
+          <p>Oops! This page is cooking in another kitchen.</p>
+          <button 
+            onClick={() => window.location.href = "/"}
+            style={{ padding: "10px 20px", background: "#1a3c34", color: "white", border: "none", borderRadius: "5px", cursor: "pointer" }}
+          >
+            Back to Home
+          </button>
+        </div>
+      } />
+    </Routes>
   );
 }
-
 export default App;

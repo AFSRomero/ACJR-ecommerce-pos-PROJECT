@@ -21,7 +21,7 @@ const Footer = () => {
       </div>
       
       <div className="footer-bottom">
-        © 2026 Foodino. All rights reserved. 🥬
+        © 2026 Foodino. All rights reserved.
       </div>
     </footer>
   );

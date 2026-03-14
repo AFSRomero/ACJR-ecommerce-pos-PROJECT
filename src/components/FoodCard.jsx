@@ -1,48 +1,38 @@
-import React, { useState } from 'react';
-import { useCart } from '../context/CartContext';
-import './FoodCard.css';
+import React from 'react';
+import { useCart } from '../auth/CartContext';
 
-const FoodCard = ({ food }) => {
+const FoodCard = ({ food, ingredients }) => {
   const { addToCart } = useCart();
-  const [showToast, setShowToast] = useState(false);
 
-  const rating = food.rating || 4.5;
-  // logic for the featured badge
-  const isFeatured = rating >= 4.8;
-
-  const handleAdd = () => {
-    addToCart(food);
-    setShowToast(true);
-    setTimeout(() => setShowToast(false), 2000);
-  };
+  // Logic: Check if ANY required ingredient has 0 or insufficient stock
+  const isOutOfStock = food.ingredients?.some(req => {
+    const invItem = ingredients.find(i => i.id === req.id);
+    // If ingredient doesn't exist or current stock is less than what the recipe needs
+    return !invItem || parseFloat(invItem.stock_quantity) < parseFloat(req.quantity_required);
+  });
 
   return (
-    <div className="food-card">
-      {/* FEATURED BADGE */}
-      {isFeatured && (
-        <div className="featured-badge">
-          🌿 Featured
-        </div>
-      )}
-
-      {showToast && <div className="toast">🌿 Added to basket!</div>}
-      
-      <img src={food.image} alt={food.name} className="food-img" />
+    <div className={`food-card ${isOutOfStock ? 'oos-blur' : ''}`}>
+      <div className="food-image">
+        <img src={food.image_url || 'https://via.placeholder.com/300'} alt={food.name} />
+        {isOutOfStock && <div className="oos-badge">OUT OF STOCK</div>}
+      </div>
       
       <div className="food-info">
-        <div className="header-row">
-          <h3 className="food-name">{food.name}</h3>
-          <div className="rating-badge">
-             ⭐ <span>{rating}</span>
-          </div>
+        <div className="food-meta">
+           <span className="food-category">{food.sku}</span>
+           <span className="food-price">₱{parseFloat(food.price).toLocaleString()}</span>
         </div>
-
-        <p className="food-desc">{food.desc}</p>
+        <h3>{food.name}</h3>
+        <p className="description">{food.description}</p>
         
-        <div className="card-footer">
-          <span className="food-price">${parseFloat(food.price).toFixed(2)}</span>
-          <button onClick={handleAdd} className="add-btn">Add +</button>
-        </div>
+        <button 
+          className="add-to-cart-btn"
+          disabled={isOutOfStock}
+          onClick={() => addToCart(food)}
+        >
+          {isOutOfStock ? 'Currently Unavailable' : 'Add to Order'}
+        </button>
       </div>
     </div>
   );

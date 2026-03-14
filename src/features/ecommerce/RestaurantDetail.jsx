@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { foodItems } from '../data/mockFood';
-import FoodCard from '../components/FoodCard';
+import FoodCard from '../../components/FoodCard';
 
 const RestaurantDetail = () => {
   const { id } = useParams();
