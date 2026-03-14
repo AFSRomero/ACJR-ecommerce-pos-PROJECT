@@ -2,23 +2,31 @@
 
 namespace App\Models;
 
-use App\Models\Ingredient;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    public function ingredients()
-{
-    return $this->belongsToMany(Ingredient::class)
-                ->withPivot('quantity_required')
-                ->withTimestamps();
-}
+    use SoftDeletes;
+
     protected $fillable = [
-    'name',
-    'description',
-    'price',
-    'stock_quantity',
-    'sku'
-];
+        'name',
+        'description',
+        'price',
+        'sku',
+        'image',
+        'category_id' // Added this
+    ];
+
+    public function ingredients()
+    {
+        return $this->belongsToMany(Ingredient::class)
+            ->withPivot('quantity_required')
+            ->withTimestamps();
+    }
+
+    public function category()
+{
+    return $this->belongsTo(Category::class);
+}
 }

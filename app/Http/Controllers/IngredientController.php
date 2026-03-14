@@ -2,47 +2,70 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Ingredient;
 use Illuminate\Http\Request;
 
 class IngredientController extends Controller
 {
+    public function index()
+    {
+        return response()->json(Ingredient::whereNull('deleted_at')->get());
+    }
 
-public function index()
-{
-    return response()->json(Ingredient::all());
-}
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'stock_quantity' => 'required|numeric|min:0',
+            'unit' => 'required|string|max:50',
+            'low_stock_threshold' => 'required|numeric|min:0'
+        ]);
 
-public function store(Request $request)
+        $ingredient = Ingredient::create($validated);
+
+        return response()->json($ingredient, 201);
+    }
+
+    public function show(Ingredient $ingredient)
+    {
+        return response()->json($ingredient);
+    }
+
+    public function update(Request $request, Ingredient $ingredient)
+    {
+        $validated = $request->validate([
+            'name' => 'sometimes|string|max:255',
+            'stock_quantity' => 'sometimes|numeric|min:0',
+            'unit' => 'sometimes|string|max:50',
+            'low_stock_threshold' => 'sometimes|numeric|min:0'
+        ]);
+
+        $ingredient->update($validated);
+
+        return response()->json($ingredient);
+    }
+
+   public function destroy(Ingredient $ingredient)
 {
-    $validated = $request->validate([
-        'name' => 'required',
-        'stock_quantity' => 'required|numeric',
-        'unit' => 'required'
+    $ingredient->delete(); // this now archives
+
+    return response()->json([
+        'message' => 'Ingredient archived successfully'
     ]);
-
-    $ingredient = Ingredient::create($validated);
-
-    return response()->json($ingredient, 201);
+}
+public function archived()
+{
+    return response()->json(
+        Ingredient::onlyTrashed()->get()
+    );
 }
 
-public function show(Ingredient $ingredient)
+public function restore($id)
 {
-    return response()->json($ingredient);
-}
+    Ingredient::onlyTrashed()
+        ->where('id', $id)
+        ->restore();
 
-public function update(Request $request, Ingredient $ingredient)
-{
-    $ingredient->update($request->all());
-
-    return response()->json($ingredient);
-}
-
-public function destroy(Ingredient $ingredient)
-{
-    $ingredient->delete();
-
-    return response()->json(['message' => 'Deleted']);
+    return response()->json(['message' => 'Restored']);
 }
 }
