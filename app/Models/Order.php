@@ -14,7 +14,6 @@ class Order extends Model
     'source',
 ];
 
-
 public function items()
 {
     return $this->hasMany(OrderItem::class);
